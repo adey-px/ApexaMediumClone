@@ -49,7 +49,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "MongiloMediumClone.urls"
+ROOT_URLCONF = "DeltaMediumClone.urls"
 
 TEMPLATES = [
     {
@@ -67,7 +67,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "MongiloMediumClone.wsgi.application"
+WSGI_APPLICATION = "DeltaMediumClone.wsgi.application"
 
 
 # Database
