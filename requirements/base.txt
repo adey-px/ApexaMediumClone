@@ -12,6 +12,7 @@ argon2-cffi==21.3.0               # secured password hashing using argon2
 drf-yasg==1.21.5                  # auto generate soga/open API from django-rest
 pillow==9.4.0                     # imaging library for python
 pytz==2022.7.1                    # cross-platform timezone calculations
+whitenoise==5.3.0
 
 # redis==4.5.1
 # celery==5.2.7
