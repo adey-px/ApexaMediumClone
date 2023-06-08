@@ -73,7 +73,7 @@ MIDDLEWARE = [
 ]
 
 # Other Defaults from Django settings
-ROOT_URLCONF = "DeltaMediumClone.urls"
+ROOT_URLCONF = "ApexaMediumClone.urls"
 
 TEMPLATES = [
     {
@@ -91,7 +91,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "DeltaMediumClone.wsgi.application"
+WSGI_APPLICATION = "ApexaMediumClone.wsgi.application"
 
 DATABASES = {
     "default": {

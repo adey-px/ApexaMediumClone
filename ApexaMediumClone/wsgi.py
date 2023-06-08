@@ -1,8 +1,6 @@
 """
-WSGI config for MongiloMediumClone project.
-
+WSGI config for ApexaMediumClone project.
 It exposes the WSGI callable as a module-level variable named ``application``.
-
 For more information on this file, see
 https://docs.djangoproject.com/en/4.1/howto/deployment/wsgi/
 """
@@ -12,6 +10,6 @@ import os
 from django.core.wsgi import get_wsgi_application
 
 # TODO - Swap settings for dev & production
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DeltaMediumClone.settings.development")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ApexaMediumClone.settings.development")
 
 application = get_wsgi_application()

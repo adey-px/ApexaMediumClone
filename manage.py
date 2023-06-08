@@ -3,11 +3,11 @@
 import os
 import sys
 
-
+# TODO - Swap settings for dev & production
 def main():
     """Run administrative tasks."""
-    # TODO - Swap settings for dev & production
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DeltaMediumClone.settings.development")
+    sys.dont_write_bytecode = True
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ApexaMediumClone.settings.development")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
