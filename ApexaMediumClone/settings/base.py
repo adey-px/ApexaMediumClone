@@ -93,16 +93,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "ApexaMediumClone.wsgi.application"
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 
 # Set database url from env vars
 # will be replaced by docker postgres
-# DATABASES = {"default": env.db("DATABASE_URL")}
+DATABASES = {"default": env.db("DATABASE_URL")}
 
 # Custom password hashers from installed argon2
 # Built in django password hasher not being used
@@ -227,21 +227,22 @@ CORS_URLS_REGEX = r"^api/.*$"
 #     },
 # }
 
-# LOGGING = {
-#     "version": 1,
-#     "disable_existing_loggers": False,
-#     "formatters": {
-#         "verbose": {
-#             "format": "%(levelname)s %(name)-12s %(asctime)s %(module)s "
-#             "%(process)d %(thread)d %(message)s"
-#         }
-#     },
-#     "handlers": {
-#         "console": {
-#             "level": "DEBUG",
-#             "class": "logging.StreamHandler",
-#             "formatter": "verbose",
-#         }
-#     },
-#     "root": {"level": "INFO", "handlers": ["console"]},
-# }
+# Set Django Logging, for console logs
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "%(levelname)s %(name)-12s %(asctime)s %(module)s "
+            "%(process)d %(thread)d %(message)s"
+        }
+    },
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        }
+    },
+    "root": {"level": "INFO", "handlers": ["console"]},
+}
