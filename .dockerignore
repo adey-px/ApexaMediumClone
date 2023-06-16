@@ -1,0 +1,9 @@
+.idea
+
+# virtualenv
+.venv
+
+# other
+**/.git
+.vscode
+.gitignore

@@ -1,0 +1,53 @@
+#!/bin/bash
+# Ensure connect to db b4 spining services
+# Refer to Dockerfile & Docker-compose file
+
+# exit script if error detected or found
+set -o errexit
+
+# fail script if any pipeline cmd failed
+set -o pipefail
+
+# exit script if unset variable is found
+set -o nounset
+
+# if db user not found in env vars, set it to postgres
+if [ -z "${DATABASE_USER}" ]; then
+  base_db_image_default_user='postgres'
+  export DATABASE_USER="${base_db_image_default_user}"
+fi
+
+# create & export database url
+# DATABASE_URL=engine://user:password@localhost:5432/db-name
+export DATABASE_URL="postgres://${DATABASE_USER}:${DATABASE_PASS}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}"
+
+# python script with multi-line cmd
+# check & connect if db is available
+python << END
+import sys
+import time
+import psycopg2
+start = time.time()
+suggest_unrecoverable_after = 30
+while True:
+  try:
+    psycopg2.connect(
+      user="${DATABASE_USER}",
+      password="${DATABASE_PASS}",
+      host="${DATABASE_HOST}",
+      port="${DATABASE_PORT}",
+      dbname="${DATABASE_NAME}",
+    )
+    break
+  except psycopg2.OperationalError as error:
+    sys.stderr.write("Waiting for postgres service...")
+    if time.time() - start > suggest_unrecoverable_after:
+      sys.stderr.write("Postgres service error: '{}'\n".format(error))
+  time.sleep(1)
+END
+
+# >&2 redirect output to standard error
+>&2 echo "Postgres service is available..."
+
+# execute all args passed to script
+exec "$@"

@@ -3,14 +3,17 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Important
-.idea
-.envs
-.envs/*
-.coverage*
+# Environments
+.env
+env/
+.venv
+venv/
 
 # Exclude this folder
-!.env/.development/
+!env/.development/
+
+# Important
+.coverage*
 
 # Static files
 static
@@ -127,15 +130,6 @@ celerybeat.pid
 
 # SageMath parsed files
 *.sage.py
-
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
 
 # Spyder project settings
 .spyderproject
