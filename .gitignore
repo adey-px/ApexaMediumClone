@@ -19,6 +19,10 @@ venv/
 static
 staticfiles
 
+# Media files
+media
+mediafiles
+
 # Other
 zeenote.md
 

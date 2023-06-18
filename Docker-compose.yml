@@ -1,0 +1,61 @@
+# Docker compose file, with multiple services to run
+# * Each service is built as an image for a container
+# - esearch - 
+# - server - django backend API endpoints server 
+# - postgres - 
+# - mailhog - fake smtp mail testing for dev only
+# - redis - 
+# - celery - 
+# - flower -  ngnix
+
+version: "3.9"
+
+services:
+    server:
+        build:
+            context: .
+            dockerfile: ./docker/development/django/Dockerfile
+        command: /start
+        volumes:
+            - .:/app:z
+            - static_volume:/app/static
+            - media_volume:/app/media
+        ports:
+            - "8000:8000"
+        env_file:
+            - ./env/.development/.postgres
+        depends_on:
+            - postgres
+            - mailhog
+        networks:
+            - codera
+
+    postgres:
+        build:
+            context: .
+            dockerfile: ./docker/development/postgres/Dockerfile
+        volumes:
+            - development_postgres_data:/var/lib/postgres/data
+            - development_postgres_data_backups:/backups
+        env_file:
+            - ./env/.development/.postgres
+        networks:
+            - codera
+
+    mailhog:
+        image: mailhog/mailhog:v1.0.0
+        container_name: mailhog
+        ports:
+            - "8025:8025"
+        networks:
+            - codera
+
+networks:
+    codera:
+        driver: bridge
+
+volumes:
+    static_volume:
+    media_volume:
+    development_postgres_data: {}
+    development_postgres_data_backups: {}

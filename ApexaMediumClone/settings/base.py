@@ -4,7 +4,7 @@ import environ
 
 # Env variable from installed django-environ
 env = environ.Env()
-
+print(env.db)
 # Build paths inside the project like this: BASE_DIR / 'subdir'
 # extra .parent means go 3-levels from this base.py to get to
 # root dir where manage.py is located
@@ -93,15 +93,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "ApexaMediumClone.wsgi.application"
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
-
-# Set database url from env vars
-# will be replaced by docker postgres
+# Set temporary url from global env
+# to be replaced by docker postgres
 DATABASES = {"default": env.db("DATABASE_URL")}
 
 # Custom password hashers from installed argon2

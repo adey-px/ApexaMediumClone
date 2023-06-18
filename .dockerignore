@@ -1,9 +1,12 @@
 .idea
 
-# virtualenv
+# venv
 .venv
 
 # other
 **/.git
 .vscode
 .gitignore
+
+README.md
+zeenote.md
