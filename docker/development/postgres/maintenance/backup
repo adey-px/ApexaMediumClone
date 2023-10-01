@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# Script to backup postgres database
+set -o errexit
+set -o nounset
+set -o pipefail
+
+# Create working directory where the script is located
+# dirname is path directory name, ${0} is this script file
+working_dir="$(dirname ${0})"
+
+# Read, execute commands from files located thru working directory 
+source "${working_dir}/_sourced/constants.sh"
+source "${working_dir}/_sourced/messages.sh"
+
+# Call function to show welcome message
+message_welcome "Backing up the '${POSTGRES_DB}' database..."
+
+# Check if user in env vars is postgres, wrong bcos its the default
+# it is required to create user, not using the default user
+if [[ "${POSTGRES_USER}" == "postgres" ]]; then
+  message_error "Backing up as 'postgres' user is not allowed. Change 'POSTGRES_USER' value in env, and try again!"
+  exit 1
+fi
+
+# Export postgres variables from env vars
+export PGUSER="${POSTGRES_USER}"
+export PGPASSWORD="${POSTGRES_PASSWORD}"
+export PGHOST="${POSTGRES_HOST}"
+export PGPORT="${POSTGRES_PORT}"
+export PGDATABASE="${POSTGRES_DB}"
+
+# Create backup file, using vars created in constants.sh
+# date displays current time & date, formatted in YM, then HMS eg 2023_01_01T12_00_00
+backup_storage="${BACKUP_FILE_PREFIX}_$(date +'%Y_%m_%dT%H_%M_%S').sql.gz"
+
+# Create backup using postgres dump command, pass in directory path in constants.sh
+# gzip compresses backup file, to be stored in the directory path
+pg_dump | gzip > "${BACKUP_DIR_PATH}/${backup_storage}"
+
+# Call function to show success message
+message_success "'${POSTGRES_DB}' backup '${backup_storage}' has been created, and placed inside '${BACKUP_DIR_PATH}'"

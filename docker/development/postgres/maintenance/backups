@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Script to Display Welcome Message
+# also to view the backups created
+set -o errexit
+set -o nounset
+set -o pipefail
+
+# Import values from shell scripts
+working_dir="$(dirname ${0})"
+
+source "${working_dir}/_sourced/constants.sh"
+source "${working_dir}/_sourced/messages.sh"
+
+# Call function to show welcome message
+message_welcome "These are the backups you've got:"
+
+# List all backups created, -l shows directory content in long format 
+# -h shows file size in human readable format, -t sorts by time last modified
+# dir path is path to directory where backup files are stored
+ls -lht "${BACKUP_DIR_PATH}"
